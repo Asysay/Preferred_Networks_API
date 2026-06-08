@@ -129,8 +129,6 @@ def is_valid_profile_text(value, max_length):
     if len(value) > max_length:
         return False
 
-    # Allows normal printable text, including Japanese.
-    # Rejects control characters like newline, tab, etc.
     if not value.isprintable():
         return False
 
