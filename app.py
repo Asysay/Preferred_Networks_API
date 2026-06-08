@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 import re
-import base64
 
 app = Flask(__name__)
 
@@ -11,6 +10,13 @@ accounts = [
   "nickname": "たろー",
   "comment": "僕は元気です"
 }
+{
+    "user_id": "Test-",
+    "password": "PaSSwd4TY",
+    "nickname": "Test-",
+    "comment": "Reserved testing account"
+}
+]
 ]
 
 @app.route("/")
@@ -109,22 +115,21 @@ def get_user(user_id):
             "message": "No user found"
         }), 404
 
+    auth_account = authenticate_request()
+
     if auth_account is None:
         return jsonify({
             "message": "Authentication failed"
         }), 401
 
-    user = {
-        "user_id": account["user_id"],
-        "nickname": account.get("nickname") or account["user_id"]
-    }
-
-    if account.get("comment"):
-        user["comment"] = account["comment"]
+    if auth_account["user_id"] != user_id:
+        return jsonify({
+            "message": "Authentication failed"
+        }), 401
 
     return jsonify({
         "message": "User details by user_id",
-        "user": user
+        "user": make_user_response(account)
     }), 200
 
 def is_valid_profile_text(value, max_length):
