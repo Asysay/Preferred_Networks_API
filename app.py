@@ -9,14 +9,13 @@ accounts = [
   "password": "PaSSwd4TY",
   "nickname": "たろー",
   "comment": "僕は元気です"
-}
+},
 {
     "user_id": "Test-",
     "password": "PaSSwd4TY",
     "nickname": "Test-",
     "comment": "Reserved testing account"
 }
-]
 ]
 
 @app.route("/")
