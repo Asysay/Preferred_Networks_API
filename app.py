@@ -18,10 +18,6 @@ accounts = [
 }
 ]
 
-@app.route("/")
-def home():
-    return jsonify({"message": "REST API test for Preferred Networks"})
-
 @app.route("/signup", methods=["POST"])
 def signup():
     data = request.get_json(silent=True) or {}
@@ -31,7 +27,7 @@ def signup():
 
     if not isinstance(user_id, str) or not isinstance(password, str):
         return jsonify({
-            "message": "Account creation failed.",
+            "message": "Account creation failed",
             "cause": "Required user_id and password"
         }), 400
 
@@ -117,11 +113,6 @@ def get_user(user_id):
     auth_account = authenticate_request()
 
     if auth_account is None:
-        return jsonify({
-            "message": "Authentication failed"
-        }), 401
-
-    if auth_account["user_id"] != user_id:
         return jsonify({
             "message": "Authentication failed"
         }), 401
